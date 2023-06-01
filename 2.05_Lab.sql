@@ -42,14 +42,54 @@ ORDER BY RENTAL_ID DESC;
  -- Check if there are any non-active users
 
 SELECT * FROM customer
-ORDER BY active;
+where active= 0;
 
 -- Hacemos el supueto que 0 es inactivo
 
    -- Create a table _backup table_ as suggested
    
-   
-   
+   CREATE TABLE IF NOT EXISTS backup_table (
+customer_id int(11) UNIQUE NOT NULL auto_increment,
+store_id int(11) DEFAULT NULL,
+first_name varchar(20) DEFAULT NULL,
+last_name varchar(20) DEFAULT NULL,
+email varchar(11) DEFAULT NULL,
+address_id int(11) DEFAULT NULL,
+active int(11) DEFAULT NULL,
+create_date varchar(300) DEFAULT NULL,
+last_update varchar(300) DEFAULT NULL,
+CONSTRAINT PRIMARY KEY (customer_id)
+);
+
+ALTER TABLE backup_table MODIFY COLUMN email varchar(100);
+
+DESCRIBE backup_table;
+
    -- Insert the non active users in the table _backup table_
+
+INSERT INTO backup_table 
+VALUES 
+('1', '2', 'HEIDI', 'LARSON', 'HEIDI.LARSON@sakilacustomer.org', '245', '0', '2006-02-14', NOW()),
+('2', '1', 'PENNY', 'NEAL', 'PENNY.NEAL@sakilacustomer.org', '276', '0', '2006-02-14', NOW()),
+('3', '2', 'KENNETH', 'GOODEN', 'KENNETH.GOODEN@sakilacustomer.org', '320', '0', '2006-02-14', NOW()),
+('4', '1', 'HARRY', 'ARCE', 'HARRY.ARCE@sakilacustomer.org', '373', '0', '2006-02-14', NOW()),
+('5', '1', 'NATHAN', 'RUNYON', 'NATHAN.RUNYON@sakilacustomer.org', '411', '0', '2006-02-14', NOW()),
+('6', '2', 'THEODORE', 'CULP', 'THEODORE.CULP@sakilacustomer.org', '451', '0', '2006-02-14', NOW()),
+('7', '1', 'MAURICE', 'CRAWLEY', 'MAURICE.CRAWLEY@sakilacustomer.org', '487', '0', '2006-02-14', NOW()),
+('8', '2', 'BEN', 'EASTER', 'BEN.EASTER@sakilacustomer.org', '515', '0', '2006-02-14', NOW()),
+('9', '1', 'CHRISTIAN', 'JUNG', 'CHRISTIAN.JUNG@sakilacustomer.org', '540', '0', '2006-02-14', NOW()),
+('10', '1', 'JIMMIE', 'EGGLESTON', 'JIMMIE.EGGLESTON@sakilacustomer.org', '564', '0', '2006-02-14', NOW()),
+('11', '1', 'TERRANCE', 'ROUSH', 'TERRANCE.ROUSH@sakilacustomer.org', '598', '0', '2006-02-14', NOW());
+
+SELECT * FROM backup_table
+ORDER BY customer_id;   
+   
    -- Delete the non active users from the table _customer_
+   
+SELECT * FROM customer
+WHERE active= '0';
+DELETE FROM customer WHERE active= '0';
+
+-- Tuve que realizarlo a 'mano' porque con la condicion active= '0' no me permitia realizarlo con el modo seguro.
+   
 -- SELECT * FROM staff;
